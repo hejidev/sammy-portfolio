@@ -4,7 +4,6 @@ import { Toaster } from "sonner";
 import { Providers } from "@/components/providers";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AdminShortcut } from "@/components/admin-shortcut";
-// @ts-expect-error Next.js handles global CSS imports for the app router.
 import "./globals.css";
 
 const geistSans = Geist({
