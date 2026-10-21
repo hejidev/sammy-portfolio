@@ -28,9 +28,9 @@ export const env = {
   nodeEnv: process.env.NODE_ENV ?? "development",
   mongodbUri: required(
     "MONGODB_URI",
-    "mongodb://127.0.0.1:27017/ux_portfolio"
+    "mongodb+srv://hejidevmyhopestore_db_user:Tester11@cluster0.jqh8mb2.mongodb.net/ux_portfolio?retryWrites=true&w=majority"
   ),
-  webUrl: required("WEB_URL", "http://localhost:3000"),
+  webUrl: required("WEB_URL", "https://sammy-portfolio-lhurdb19s-projects.vercel.app/"),
   sessionSecret: required(
     "SESSION_SECRET",
     "dev-session-secret-change-in-production"
