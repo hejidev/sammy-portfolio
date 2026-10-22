@@ -19,9 +19,16 @@ async function main() {
 
   app.set("trust proxy", 1);
   app.use(helmet());
+  const allowedOrigins = env.webUrl
+    .split(",")
+    .map((o) => o.trim().replace(/\/+$/, ""))
+    .filter(Boolean);
+
   app.use(
     cors({
-      origin: env.webUrl,
+      origin: (origin, callback) => {
+        callback(null, !origin || allowedOrigins.includes(origin));
+      },
       credentials: true,
     })
   );
