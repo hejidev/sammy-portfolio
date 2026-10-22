@@ -11,6 +11,11 @@ import publicRoutes from "./routes/public";
 import authRoutes from "./routes/auth";
 import adminRoutes from "./routes/admin";
 
+const allowedOrigins = (process.env.CORS_ORIGIN ?? "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 async function main() {
   await connectDb();
   configureCloudinary();
@@ -19,17 +24,22 @@ async function main() {
 
   app.set("trust proxy", 1);
   app.use(helmet());
-  const allowedOrigins = env.webUrl
-    .split(",")
-    .map((o) => o.trim().replace(/\/+$/, ""))
-    .filter(Boolean);
-
   app.use(
     cors({
       origin: (origin, callback) => {
-        callback(null, !origin || allowedOrigins.includes(origin));
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.includes(origin)) {
+          return callback(null, true);
+        }
+
+        console.warn("CORS blocked origin:", origin);
+        console.warn("Allowed origins:", allowedOrigins);
+        return callback(new Error(`CORS blocked for origin: ${origin}`));
       },
       credentials: true,
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization"],
     })
   );
   app.use(express.json({ limit: "2mb" }));
