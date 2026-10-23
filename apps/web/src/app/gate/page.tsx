@@ -20,6 +20,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/theme-toggle";
+import Link from "next/link";
+import { ArrowBigLeft, ArrowLeft } from "lucide-react";
 
 type EmailValues = z.infer<typeof OtpRequestSchema>;
 type OtpValues = z.infer<typeof OtpVerifySchema>;
@@ -136,6 +138,9 @@ export default function GatePage() {
       <p className="mt-6 text-xs text-muted-foreground">
         Restricted area · Ctrl+Shift+O
       </p>
+      <Link href="/" className="mt-2 text-xs text-muted-foreground underline flex items-center gap-1">
+        <ArrowLeft /> Back to portfolio
+      </Link>
     </div>
   );
 }
